@@ -1,3 +1,5 @@
+# This fork only adds kibana 7.4.0 support
+
 <a href="https://fermiumlabs.com/">
     <img src="https://fermiumlabs.com/Assets/img/logos/Horizontal-Main_500px.png" alt="Fermium LABS logo" width="200" align="right" />
 </a>
