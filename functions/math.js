@@ -51,10 +51,7 @@ module.exports = new Chainable('math', {
             var vectoreq = equation.split('*').join('.*').split('/').join('./').split('^').join('.^');
             vectoreq = vectoreq.split('..*').join('.*').split('../').join('./').split('..^').join('.^');
             //check if eachseries is being elaborated
-            console.log(vectoreq);
-            console.log(scope);
             var evaluated = math.eval(vectoreq, scope);//evaluate the new value/function in the scope
-            console.log(evaluated);
             /*
               Dealing with mathjs result cases:
                 1) With ResultSet results it gets the entries[0] array which is the actual elaboration
@@ -62,10 +59,8 @@ module.exports = new Chainable('math', {
                 3) With single value result it plots an horizontal line at that height
             */
             if (evaluated.hasOwnProperty('entries')) {
-                console.log('2:' + evaluated.entries[0]);
                 evaluated = evaluated.entries[0];
             }
-            console.log('4:' + evaluated)
             if (math.typeof(evaluated[0]) == 'Unit') {
                 //math.autoscale(evaluated);
                 unit = '   [' + evaluated[0].toJSON().unit + ']';
@@ -84,24 +79,6 @@ module.exports = new Chainable('math', {
             return (isAssign) ? scope['source'] : evaluated;//return the correct thing to display
 
         }
-
-        console.log(alter(args, function (eachSeries) {
-            var times = _.map(eachSeries.data, 0); //x axis
-            var val = _.map(eachSeries.data, 1); //y axis
-
-            mathenviroment.setScope(envName, {'source': val}); //add source to the enviroment
-
-            //evaluate the input equation inside the updated scope
-            var values = evaluate(inputequation, mathenviroment.getScope(envName));
-
-            eachSeries.data = _.zip(times, values); //update series with new values
-
-            //pretty print equation to string (for the axis label)
-            var eq = (isAssign) ? eachSeries.label : inputequation.split(';').slice(-1)[0].split('source').join(eachSeries.label);
-            eachSeries.label = label != null ? label : eq;
-            eachSeries.label = eachSeries.label + unit;
-            return eachSeries;
-        }));
 
         return alter(args, function (eachSeries) {
             var times = _.map(eachSeries.data, 0); //x axis
