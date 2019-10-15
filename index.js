@@ -3,8 +3,8 @@ module.exports = function (kibana) {
     name: 'mathlion',
     require: ['timelion'],
     init: function (server) {
-      server.plugins.timelion.nop = require('./functions/nop');
-      server.plugins.timelion.math = require('./functions/math');
+      server.plugins.timelion.functions.nop = require('./functions/nop');
+      server.plugins.timelion.functions.math = require('./functions/math');
     }
   });
 };
